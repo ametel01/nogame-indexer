@@ -21,7 +21,7 @@ services:
     - /data/src/battleReport.ts
     volumes:
     - ./:/data/
-    - /Users/alexmetelli/.certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
+    - ./.certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
     environment:
       PERSIST_TO_ETCD: http://etcd:2379
       SINK_ID: battle-reports
@@ -38,7 +38,7 @@ services:
     - /data/src/planetGenerated.ts
     volumes:
     - ./:/data/
-    - /Users/alexmetelli/.certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
+    - ./.certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
     environment:
       PERSIST_TO_ETCD: http://etcd:2379
       SINK_ID: planet-generated
@@ -55,7 +55,7 @@ services:
     - /data/src/resourcesSpent.ts
     volumes:
     - ./:/data/
-    - /Users/alexmetelli/.certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
+    - ./.certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
     environment:
       PERSIST_TO_ETCD: http://etcd:2379
       SINK_ID: resources-spent
