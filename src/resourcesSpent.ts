@@ -1,5 +1,5 @@
 // import { hash } from "https://esm.sh/starknet@5.14";
-import { Block, EventWithTransaction } from "./deps.ts";
+import { Block, EventWithTransaction } from "./common/deps.ts";
 import {
   SELECTOR_KEYS,
   NOGAME_CONTRACT,

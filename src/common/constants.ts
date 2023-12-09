@@ -14,6 +14,6 @@ export const SELECTOR_KEYS = {
 };
 
 export const NOGAME_CONTRACT =
-  "0x055f947ca6e646dbc29e2501e6ece87a1bf772fa5be418364ec6e0104a03cb26";
+  "0x064398e034e6250f75a72866dcd75689d355664c91a33a45749013a84159f491";
 
 export const GOERLI_URL = "https://goerli.starknet.a5a.ch";
