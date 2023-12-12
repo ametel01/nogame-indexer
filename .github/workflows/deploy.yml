@@ -22,7 +22,14 @@ jobs:
           script: |
             # Pull latest changes
             cd /opt/indexer/nogame-indexer  
-            git pull origin main
+            # Fetch the latest changes from the origin
+            git fetch origin
+
+            # Hard reset to the latest state of 'origin/main'
+            git reset --hard origin/main
+
+            # Clean up any untracked files
+            git clean -fd
 
             # Update .env file
             echo "${{ secrets.ENV_CONTENTS }}" > .env
