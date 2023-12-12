@@ -1,0 +1,44 @@
+name: Deploy Application
+
+on:
+  push:
+    branches:
+      - main # Or any other branch you use for deployment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SSH and Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            # Pull latest changes
+            cd /opt/indexer/nogame-indexer  
+            git pull origin main
+
+            # Update .env file
+            echo "${{ secrets.ENV_CONTENTS }}" > .env
+
+            # Update SSL certificate
+            mkdir -p ./certificates
+            echo "${{ secrets.SSL_CERT }}" > ./certificates/prod-ca-2021.pem
+
+            # Run Docker Compose
+            docker compose --env-file=.env up -d
+
+            # Setup or restart systemd service
+            if systemctl --quiet is-active myservice.service; then
+              systemctl restart indexer.service
+            else
+              # Assuming you have a service file at /etc/systemd/system/indexer.service
+              systemctl start indexer.service
+              systemctl enable indexer.service
+            fi
