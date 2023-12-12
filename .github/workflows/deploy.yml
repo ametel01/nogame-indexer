@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: SSH and Deploy
         uses: appleboy/ssh-action@master
@@ -36,9 +36,9 @@ jobs:
 
             # Setup or restart systemd service
             if systemctl --quiet is-active myservice.service; then
-              systemctl restart indexer.service
+              sudo systemctl restart indexer.service
             else
               # Assuming you have a service file at /etc/systemd/system/indexer.service
-              systemctl start indexer.service
-              systemctl enable indexer.service
+              sudo systemctl start indexer.service
+              sudo systemctl enable indexer.service
             fi
