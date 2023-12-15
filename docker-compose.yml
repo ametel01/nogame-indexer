@@ -1,38 +1,66 @@
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+version: '3'
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+services:
+  etcd:
+    image: docker.io/bitnami/etcd:latest
+    environment:
+      ALLOW_NONE_AUTHENTICATION: "yes"
+    volumes:
+    - etcd_data:/bitnami/etcd
+    ports:
+    - 2379:2379
 
-      - name: SSH and Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.DEPLOY_KEY }}
-          script: |
-            # Pull latest changes
-            cd /opt/indexer/nogame-indexer  
-            git fetch origin
-            git reset --hard origin/main
-            git clean -fd
+  battle_reports:
+    image: quay.io/apibara/sink-postgres:0.4.10
+    depends_on:
+    - etcd
+    restart: always
+    command:
+    - run
+    -  --allow-env=/data/.env 
+    - /data/src/battleReport.ts
+    volumes:
+    - ./:/data/
+    - .certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
+    environment:
+      PERSIST_TO_ETCD: http://etcd:2379
+      SINK_ID: battle-reports
+      AUTH_TOKEN: ${AUTH_TOKEN}
 
-            # Update .env file
-            echo "\${{ secrets.ENV_CONTENTS }}" > .env
+  planet_generated:
+    image: quay.io/apibara/sink-postgres:0.4.10
+    depends_on:
+    - etcd
+    restart: always
+    command:
+    - run
+    -  --allow-env=/data/.env 
+    - /data/src/planetGenerated.ts
+    volumes:
+    - ./:/data/
+    - .certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
+    environment:
+      PERSIST_TO_ETCD: http://etcd:2379
+      SINK_ID: planet-generated
+      AUTH_TOKEN: ${AUTH_TOKEN}
 
-            # Update SSL certificate
-            mkdir -p ./certificates
-            echo "\${{ secrets.PEM_CERTIFICATE }}" | base64 -d > ./certificates/prod-ca-2021.pem
+  resources_spent:
+    image: quay.io/apibara/sink-postgres:0.4.10
+    depends_on:
+    - etcd
+    restart: always
+    command:
+    - run
+    -  --allow-env=/data/.env 
+    - /data/src/resourcesSpent.ts
+    volumes:
+    - ./:/data/
+    - .certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
+    environment:
+      PERSIST_TO_ETCD: http://etcd:2379
+      SINK_ID: resources-spent
+      AUTH_TOKEN: ${AUTH_TOKEN}
 
-            # Run Docker Compose
-            source .env
-            docker-compose up -d
 
-            # Setup or restart systemd service
-            if systemctl --quiet is-active myservice.service; then
-              sudo systemctl restart indexer.service
-            else
-              sudo systemctl start indexer.service
-              sudo systemctl enable indexer.service
+volumes:
+  etcd_data:

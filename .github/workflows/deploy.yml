@@ -1,9 +1,7 @@
-name: Deploy Application
-
 on:
   push:
     branches:
-      - main # Or any other branch you use for deployment
+      - main
 
 jobs:
   deploy:
@@ -22,31 +20,24 @@ jobs:
           script: |
             # Pull latest changes
             cd /opt/indexer/nogame-indexer  
-            # Fetch the latest changes from the origin
-            git fetch origin
-
-            # Hard reset to the latest state of 'origin/main'
+            git fetch origin main
             git reset --hard origin/main
-
-            # Clean up any untracked files
-            git clean -fd
+            git pull origin main
 
             # Update .env file
-            echo "${{ secrets.ENV_CONTENTS }}" > .env
+            echo '${{ secrets.ENV_CONTENTS }}' > .env
 
             # Update SSL certificate
-            mkdir -p ./certificates
-            echo "${{ secrets.SSL_CERT }}" > ./certificates/prod-ca-2021.pem
+            mkdir -p ./.certificates
+            echo '${{ secrets.PEM_CERTIFICATE }}' > .certificates/prod-ca-2021.pem
 
             # Run Docker Compose
             source .env
             docker-compose up -d
 
             # Setup or restart systemd service
-            if systemctl --quiet is-active myservice.service; then
+            if systemctl --quiet is-active indexer.service; then
               sudo systemctl restart indexer.service
             else
-              # Assuming you have a service file at /etc/systemd/system/indexer.service
               sudo systemctl start indexer.service
               sudo systemctl enable indexer.service
-            fi

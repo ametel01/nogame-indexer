@@ -3,13 +3,14 @@ import { Block, EventWithTransaction } from "./common/deps.ts";
 import {
   SELECTOR_KEYS,
   NOGAME_CONTRACT,
+  STARTING_BLOCK,
   GOERLI_URL,
   formatFelt,
 } from "./common/constants.ts";
 
 export const config = {
   streamUrl: GOERLI_URL,
-  startingBlock: 894605,
+  startingBlock: STARTING_BLOCK,
   network: "starknet",
   filter: {
     header: { weak: true },
@@ -107,8 +108,8 @@ export default function transform({ events, header }: Block) {
     const key = BigInt(event.keys[0]);
 
     // Temporary to avoid null pk error
-    const uniqueId =
-      Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 1000);
+  // const uniqueId =
+  //   Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 1000);
 
     let type = "";
     switch (key) {
@@ -129,7 +130,7 @@ export default function transform({ events, header }: Block) {
     }
 
     return {
-      spent_id: uniqueId,
+      // spent_id: uniqueId,
       planet_id: planetId,
       type: type,
       steel: steel,
