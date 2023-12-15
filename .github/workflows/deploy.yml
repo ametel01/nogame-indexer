@@ -33,7 +33,7 @@ jobs:
 
             # Run Docker Compose
             source .env
-            docker-compose up -d
+            # docker-compose up -d
 
             # Setup or restart systemd service
             if systemctl --quiet is-active indexer.service; then

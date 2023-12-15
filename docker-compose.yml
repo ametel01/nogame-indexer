@@ -10,23 +10,6 @@ services:
     ports:
     - 2379:2379
 
-  battle_reports:
-    image: quay.io/apibara/sink-postgres:0.4.10
-    depends_on:
-    - etcd
-    restart: always
-    command:
-    - run
-    -  --allow-env=/data/.env 
-    - /data/src/battleReport.ts
-    volumes:
-    - ./:/data/
-    - .certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
-    environment:
-      PERSIST_TO_ETCD: http://etcd:2379
-      SINK_ID: battle-reports
-      AUTH_TOKEN: ${AUTH_TOKEN}
-
   planet_generated:
     image: quay.io/apibara/sink-postgres:0.4.10
     depends_on:
@@ -59,6 +42,23 @@ services:
     environment:
       PERSIST_TO_ETCD: http://etcd:2379
       SINK_ID: resources-spent
+      AUTH_TOKEN: ${AUTH_TOKEN}
+
+  battle_reports:
+    image: quay.io/apibara/sink-postgres:0.4.10
+    depends_on:
+    - etcd
+    restart: always
+    command:
+    - run
+    -  --allow-env=/data/.env 
+    - /data/src/battleReport.ts
+    volumes:
+    - ./:/data/
+    - .certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
+    environment:
+      PERSIST_TO_ETCD: http://etcd:2379
+      SINK_ID: battle-reports
       AUTH_TOKEN: ${AUTH_TOKEN}
 
 
