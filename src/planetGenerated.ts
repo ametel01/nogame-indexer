@@ -3,13 +3,14 @@ import { Block, EventWithTransaction } from "./common/deps.ts";
 import {
   SELECTOR_KEYS,
   NOGAME_CONTRACT,
+  STARTING_BLOCK,
   GOERLI_URL,
   formatFelt,
 } from "./common/constants.ts";
 
 export const config = {
   streamUrl: GOERLI_URL,
-  startingBlock: 894605,
+  startingBlock: STARTING_BLOCK,
   network: "starknet",
   filter: {
     header: { weak: true },
@@ -39,7 +40,9 @@ export default function transform({ events, header }: Block) {
     console.log(event);
     const { timestamp } = header;
     const planetId = parseInt(event.data[0], 16);
-    const account = event.data[1].toString();
+    const system = parseInt(event.data[1].toString());
+    const orbit = parseInt(event.data[2].toString());
+    const account = event.data[3].toString();
 
     const key = BigInt(event.keys[0]);
 
@@ -47,6 +50,8 @@ export default function transform({ events, header }: Block) {
       case SELECTOR_KEYS.PLANET: {
         return {
           id: planetId,
+          system: system,
+          orbit: orbit,
           account: account,
           time: timestamp,
         };

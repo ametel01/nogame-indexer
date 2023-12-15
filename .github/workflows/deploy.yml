@@ -39,7 +39,8 @@ jobs:
             echo "${{ secrets.SSL_CERT }}" > ./certificates/prod-ca-2021.pem
 
             # Run Docker Compose
-            docker compose --env-file=.env up -d
+            source .env
+            docker-compose up -d
 
             # Setup or restart systemd service
             if systemctl --quiet is-active myservice.service; then

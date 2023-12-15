@@ -41,55 +41,101 @@ export const config = {
   },
 };
 
+// export default function transform({ events, header }: Block) {
+//   if (!header) {
+//     console.log("missing header, unable to process", events.length, "events");
+//     return;
+//   }
+//   const output = events.map(({ event }: EventWithTransaction) => {
+//     const { timestamp } = header;
+//     const planetId = parseInt(event.data[0], 16);
+//     const steel = parseInt(event.data[1], 16);
+//     const quartz = parseInt(event.data[2], 16);
+
+//     const key = BigInt(event.keys[0]);
+
+//     switch (key) {
+//       case SELECTOR_KEYS.COMPOUNDS: {
+//         return {
+//           planet_id: planetId,
+//           type: "compound",
+//           amount: steel + quartz,
+//           time: timestamp,
+//         };
+//       }
+//       case SELECTOR_KEYS.TECHS: {
+//         return {
+//           planet_id: planetId,
+//           type: "tech",
+//           amount: steel + quartz,
+//           time: timestamp,
+//         };
+//       }
+//       case SELECTOR_KEYS.FLEET: {
+//         return {
+//           planet_id: planetId,
+//           type: "fleet",
+//           amount: steel + quartz,
+//           time: timestamp,
+//         };
+//       }
+//       case SELECTOR_KEYS.DEFENCES: {
+//         return {
+//           planet_id: planetId,
+//           type: "defence",
+//           amount: steel + quartz,
+//           time: timestamp,
+//         };
+//       }
+//       default:
+//         return;
+//     }
+//   });
+//   return output;
+// }
+
 export default function transform({ events, header }: Block) {
   if (!header) {
     console.log("missing header, unable to process", events.length, "events");
     return;
   }
+
   const output = events.map(({ event }: EventWithTransaction) => {
-    const { timestamp } = header;
     const planetId = parseInt(event.data[0], 16);
     const steel = parseInt(event.data[1], 16);
     const quartz = parseInt(event.data[2], 16);
-
     const key = BigInt(event.keys[0]);
 
+    // Temporary to avoid null pk error
+    const uniqueId =
+      Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 1000);
+
+    let type = "";
     switch (key) {
-      case SELECTOR_KEYS.COMPOUNDS: {
-        return {
-          planet_id: planetId,
-          type: "compound",
-          amount: steel + quartz,
-          time: timestamp,
-        };
-      }
-      case SELECTOR_KEYS.TECHS: {
-        return {
-          planet_id: planetId,
-          type: "tech",
-          amount: steel + quartz,
-          time: timestamp,
-        };
-      }
-      case SELECTOR_KEYS.FLEET: {
-        return {
-          planet_id: planetId,
-          type: "fleet",
-          amount: steel + quartz,
-          time: timestamp,
-        };
-      }
-      case SELECTOR_KEYS.DEFENCES: {
-        return {
-          planet_id: planetId,
-          type: "defence",
-          amount: steel + quartz,
-          time: timestamp,
-        };
-      }
+      case SELECTOR_KEYS.COMPOUNDS:
+        type = "compound";
+        break;
+      case SELECTOR_KEYS.TECHS:
+        type = "tech";
+        break;
+      case SELECTOR_KEYS.FLEET:
+        type = "fleet";
+        break;
+      case SELECTOR_KEYS.DEFENCES:
+        type = "defence";
+        break;
       default:
         return;
     }
+
+    return {
+      spent_id: uniqueId,
+      planet_id: planetId,
+      type: type,
+      steel: steel,
+      quartz: quartz,
+    };
   });
-  return output;
+
+  return output.filter((item) => item !== undefined);
 }
