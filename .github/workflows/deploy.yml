@@ -6,7 +6,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -18,26 +17,28 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            # Pull latest changes
-            cd /opt/indexer/nogame-indexer  
-            git fetch origin main
+            set -e
+
+            # Navigate to the project directory
+            cd /opt/indexer/nogame-indexer
+
+            # Update the repository
+            git fetch --all
             git reset --hard origin/main
-            git pull origin main
 
-            # Update .env file
-            echo '${{ secrets.ENV_CONTENTS }}' > .env
+            # # Create or update .env file
+            # echo `${{ secrets.ENV_CONTENTS }}` > .env
 
-            # Update SSL certificate
-            mkdir -p ./.certificates
-            echo '${{ secrets.PEM_CERTIFICATE }}' > .certificates/prod-ca-2021.pem
+            # # Create or update SSL certificate
+            # mkdir -p .certificates
+            # echo `${{ secrets.PEM_CERTIFICATE }}` > .certificates/prod-ca-2021.pem
 
-            # Run Docker Compose
-            source .env
-            # docker-compose up -d
+            # # Source the .env file
+            # source .env
 
-            # Setup or restart systemd service
-            if systemctl --quiet is-active indexer.service; then
-              sudo systemctl restart indexer.service
-            else
-              sudo systemctl start indexer.service
-              sudo systemctl enable indexer.service
+            # # Restart or start the systemd service
+            # if systemctl --quiet is-active indexer.service; then
+            #   sudo systemctl restart indexer.service
+            # else
+            #   sudo systemctl start indexer.service
+            #   sudo systemctl enable indexer.service
