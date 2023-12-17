@@ -31,4 +31,4 @@ jobs:
 
             # Create or update SSL certificate
             mkdir -p .certificates
-            echo `${{ secrets.PEM_CERTIFICATE }}` > .certificates/prod-ca-2021.pem
+            echo `${{ secrets.PEM_CERTIFICATE }}` | base64 --decode > .certificates/prod-ca-2021.pem
