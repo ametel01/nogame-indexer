@@ -17,6 +17,7 @@ jobs:
         run: |
           # Assuming apibara can be installed globally. Replace this with the actual installation command.
           curl -sL https://install.apibara.com | bash
+          echo "/home/ametel/.local/share/apibara/bin" >> $GITHUB_PATH
 
       - name: SSH and Deploy
         uses: appleboy/ssh-action@master
