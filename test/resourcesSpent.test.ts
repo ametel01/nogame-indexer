@@ -1,14 +1,13 @@
 import {
   NOGAME_CONTRACT,
   SELECTOR_KEYS,
-  STARTING_BLOCK,
   formatFelt,
 } from "../src/common/constants.ts";
 import { Block } from "../src/common/deps.ts";
 
 export const config = {
   streamUrl: "https://goerli.starknet.a5a.ch",
-  startingBlock: STARTING_BLOCK,
+  startingBlock: 918762,
   network: "starknet",
   filter: {
     header: { weak: true },
