@@ -25,20 +25,3 @@ jobs:
             # Update the repository
             git fetch --all
             git reset --hard origin/main
-
-            # # Create or update .env file
-            # echo `${{ secrets.ENV_CONTENTS }}` > .env
-
-            # # Create or update SSL certificate
-            # mkdir -p .certificates
-            # echo `${{ secrets.PEM_CERTIFICATE }}` > .certificates/prod-ca-2021.pem
-
-            # # Source the .env file
-            # source .env
-
-            # # Restart or start the systemd service
-            # if systemctl --quiet is-active indexer.service; then
-            #   sudo systemctl restart indexer.service
-            # else
-            #   sudo systemctl start indexer.service
-            #   sudo systemctl enable indexer.service
