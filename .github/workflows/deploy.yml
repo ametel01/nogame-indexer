@@ -13,6 +13,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install Apibara
+        run: |
+          # Assuming apibara can be installed globally. Replace this with the actual installation command.
+          curl -sL https://install.apibara.com | bash
+
       - name: SSH and Deploy
         uses: appleboy/ssh-action@master
         with:
