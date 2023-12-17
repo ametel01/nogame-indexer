@@ -39,6 +39,9 @@ jobs:
             # Source the .env file
             source .env
 
+            # Run Apibara tests
+            apibara test
+
             # Restart or start the systemd service
             if systemctl --quiet is-active indexer.service; then
               sudo systemctl restart indexer.service
