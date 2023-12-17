@@ -25,3 +25,9 @@ jobs:
             # Update the repository
             git fetch --all
             git reset --hard origin/main
+
+            # Create or update .env file
+            echo `${{ secrets.ENV_CONTENTS }}` > .env
+
+            # Create or update SSL certificate
+            mkdir -p .certificates
