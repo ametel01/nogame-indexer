@@ -35,3 +35,13 @@ jobs:
             # Create or update SSL certificate
             mkdir -p .certificates
             echo "$PEM_CERTIFICATE" > .certificates/prod-ca-2021.pem
+
+            # Source the .env file
+            source .env
+
+            # Restart or start the systemd service
+            if systemctl --quiet is-active indexer.service; then
+              sudo systemctl restart indexer.service
+            else
+              sudo systemctl start indexer.service
+              sudo systemctl enable indexer.service
