@@ -6,6 +6,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      ENV_CONTENTS: ${{ secrets.ENV_CONTENTS }}
+      PEM_CERTIFICATE: ${{ secrets.PEM_CERTIFICATE }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,8 +30,8 @@ jobs:
             git reset --hard origin/main
 
             # Create or update .env file
-            echo `${{ secrets.ENV_CONTENTS }}` > .env
+            echo "$ENV_CONTENTS" > .env
 
             # Create or update SSL certificate
             mkdir -p .certificates
-            echo `${{ secrets.PEM_CERTIFICATE }}` | base64 --decode > .certificates/prod-ca-2021.pem
+            echo "$PEM_CERTIFICATE" > .certificates/prod-ca-2021.pem
