@@ -1,10 +1,18 @@
+<div align="center">
+
 # NoGame Indexer
+
+![Deployment](https://github.com/ametel01/nogame-indexer/actions/workflows/deploy.yml/badge.svg?style=for-the-badge&logo=github)
+
+</div>
 
 ## Introduction
 
 `nogame-indexer` is an advanced data indexing tool designed for [NoGame](https://github.com/ametel01/nogame-starknet), a revolutionary gaming platform. This tool is powered by [Apibara](https://www.apibara.com/)'s Direct Node Access (DNA) technology, which facilitates direct data streaming from the node. This approach ensures minimal overhead, leading to enhanced performance characterized by lower latency and higher throughput.
 
 ## Features
+
+<div align="justify">
 
 - **Direct Node Access (DNA)**:
   - Utilizes Apibara's DNA for real-time data streaming.
@@ -39,11 +47,25 @@
   - Offers a user-friendly interface for easy interaction with the indexer.
   - Provides customizable options to tailor the data indexing process according to specific needs or preferences.
 
+</div>
+
+---
+
 ## License
+
+<div align="center">
 
 This project is licensed under the [MIT License](./LICENCE.md) - see the LICENSE file for details.
 
+</div>
+
+---
+
 ## Acknowledgements
+
+<div align="center">
 
 - Thanks to [Apibara](https://www.apibara.com/) for enabling advanced data streaming capabilities with their Direct Node Access technology.
 - Our gratitude goes out to the NoGame community for their continuous support and invaluable feedback.
+
+</div>
