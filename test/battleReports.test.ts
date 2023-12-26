@@ -1,12 +1,13 @@
 import {
   NOGAME_CONTRACT,
   SELECTOR_KEYS,
+  SEPOLIA_URL,
   formatFelt,
 } from "../src/common/constants.ts";
 import { Block } from "../src/common/deps.ts";
 
 export const config = {
-  streamUrl: "https://goerli.starknet.a5a.ch",
+  streamUrl: SEPOLIA_URL,
   startingBlock: 918762,
   network: "starknet",
   filter: {

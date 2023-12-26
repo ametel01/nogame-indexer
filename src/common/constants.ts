@@ -13,9 +13,41 @@ export const SELECTOR_KEYS = {
   BATTLE: BigInt(hash.getSelectorFromName("BattleReport")),
 };
 
-export const STARTING_BLOCK = 917881;
+export const STARTING_BLOCK = 11722;
 
 export const NOGAME_CONTRACT =
-  "0x00c2698a7a63b35b0cf7e8fbb8ac59ffcccdafec2fad81712e209682059a4bd9";
+  "0x068d1d807519589dab441e970986e469ac565a4ce6d3c82faf0fdec4100aa760";
 
-export const GOERLI_URL = "https://goerli.starknet.a5a.ch";
+export const SEPOLIA_URL = "https://sepolia.starknet.a5a.ch";
+export const MAINNET_URL = "https://mainnet.starknet.a5a.ch";
+
+export enum Names {
+  STEEL = 1,
+  QUARTZ = 2,
+  TRITIUM = 3,
+  ENERGY_PLANT = 4,
+  LAB = 5,
+  DOCKYARD = 6,
+  ENERGY_TECH = 7,
+  DIGITAL = 8,
+  BEAM_TECH = 9,
+  ARMOUR = 10,
+  ION = 11,
+  PLASMA_TECH = 12,
+  WEAPONS = 13,
+  SHIELD = 14,
+  SPACETIME = 15,
+  COMBUSTION = 16,
+  THRUST = 17,
+  WARP = 18,
+  CARRIER = 19,
+  SCRAPER = 20,
+  CELESTIA = 21,
+  SPARROW = 22,
+  FRIGATE = 23,
+  ARMADE = 24,
+  BLASTER = 25,
+  BEAM = 26,
+  ASTRAL = 27,
+  PLASMA = 28,
+}

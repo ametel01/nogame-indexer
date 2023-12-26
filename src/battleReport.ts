@@ -3,12 +3,18 @@ import {
   SELECTOR_KEYS,
   NOGAME_CONTRACT,
   STARTING_BLOCK,
-  GOERLI_URL,
+  SEPOLIA_URL,
   formatFelt,
 } from "./common/constants.ts";
 
+const denoEnv = Deno.env.get("DENO_ENV");
+const pemCert =
+  denoEnv === "production"
+    ? Deno.env.get("PEM_PRODUCTION_CERTIFICATE")
+    : Deno.env.get("PEM_DEVELOPMENT_CERTIFICATE");
+
 export const config = {
-  streamUrl: GOERLI_URL,
+  streamUrl: SEPOLIA_URL,
   startingBlock: STARTING_BLOCK,
   network: "starknet",
   finally: "DATA_STATUS_PENDING",
@@ -25,7 +31,7 @@ export const config = {
   sinkOptions: {
     connectionString: Deno.env.get("PGQL_CONNECTION"),
     tableName: "battlereport",
-    tlsCertificate: Deno.env.get("PEM_CERTIFICATE"),
+    tlsCertificate: pemCert,
     tlsAcceptInvalidCertificates: true,
   },
 };

@@ -4,12 +4,18 @@ import {
   SELECTOR_KEYS,
   NOGAME_CONTRACT,
   STARTING_BLOCK,
-  GOERLI_URL,
+  SEPOLIA_URL,
   formatFelt,
 } from "./common/constants.ts";
 
+const denoEnv = Deno.env.get("DENO_ENV");
+const pemCert =
+  denoEnv === "production"
+    ? Deno.env.get("PEM_PRODUCTION_CERTIFICATE")
+    : Deno.env.get("PEM_DEVELOPMENT_CERTIFICATE");
+
 export const config = {
-  streamUrl: GOERLI_URL,
+  streamUrl: SEPOLIA_URL,
   startingBlock: STARTING_BLOCK,
   network: "starknet",
   filter: {
@@ -25,7 +31,7 @@ export const config = {
   sinkOptions: {
     connectionString: Deno.env.get("PGQL_CONNECTION"),
     tableName: "planet",
-    tlsCertificate: Deno.env.get("PEM_CERTIFICATE"),
+    tlsCertificate: pemCert,
     tlsAcceptInvalidCertificates: true,
   },
 };
@@ -37,28 +43,19 @@ export default function transform({ events, header }: Block) {
   }
 
   const output = events.map(({ event }: EventWithTransaction) => {
-    console.log(event);
     const { timestamp } = header;
     const planetId = parseInt(event.data[0], 16);
     const system = parseInt(event.data[1].toString());
     const orbit = parseInt(event.data[2].toString());
     const account = event.data[3].toString();
 
-    const key = BigInt(event.keys[0]);
-
-    switch (key) {
-      case SELECTOR_KEYS.PLANET: {
-        return {
-          id: planetId,
-          system: system,
-          orbit: orbit,
-          account: account,
-          time: timestamp,
-        };
-      }
-      default:
-        return;
-    }
+    return {
+      id: planetId,
+      system: system,
+      orbit: orbit,
+      account: account,
+      time: timestamp,
+    };
   });
   return output;
 }
