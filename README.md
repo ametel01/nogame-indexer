@@ -2,7 +2,7 @@
 
 # NoGame Indexer
 
-![Deploy](https://github.com/ametel01/nogame-indexer/actions/workflows/deploy.yml/badge.svg?style=for-the-badge&logo=github)
+![Deployment](https://github.com/ametel01/nogame-indexer/actions/workflows/deploy.yml/badge.svg?style=for-the-badge&logo=github)
 
 </div>
 
