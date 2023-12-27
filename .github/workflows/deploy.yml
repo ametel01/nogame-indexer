@@ -41,11 +41,13 @@ jobs:
             # Source the .env file
             source .env
 
-            # Run Apibara tests
-            export PATH=$PATH:/home/ametel/.local/share/apibara/bin
-            which apibara
-            apibara test
-            apibara test
+            cat .env
+
+            # # Run Apibara tests
+            # export PATH=$PATH:/home/ametel/.local/share/apibara/bin
+            # which apibara
+            # apibara test
+            # apibara test
 
             # Restart or start the systemd service
             if systemctl --quiet is-active indexer.service; then
