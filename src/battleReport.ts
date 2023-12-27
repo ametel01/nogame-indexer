@@ -7,12 +7,6 @@ import {
   formatFelt,
 } from "./common/constants.ts";
 
-const denoEnv = Deno.env.get("DENO_ENV");
-const pemCert =
-  denoEnv === "production"
-    ? Deno.env.get("PEM_PRODUCTION_CERTIFICATE")
-    : Deno.env.get("PEM_DEVELOPMENT_CERTIFICATE");
-
 export const config = {
   streamUrl: SEPOLIA_URL,
   startingBlock: STARTING_BLOCK,
@@ -31,7 +25,7 @@ export const config = {
   sinkOptions: {
     connectionString: Deno.env.get("PGQL_CONNECTION"),
     tableName: "battlereport",
-    tlsCertificate: pemCert,
+    tlsCertificate: Deno.env.get("PEM_CERTIFICATE"),
     tlsAcceptInvalidCertificates: true,
   },
 };
