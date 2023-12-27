@@ -13,10 +13,10 @@ export const SELECTOR_KEYS = {
   BATTLE: BigInt(hash.getSelectorFromName("BattleReport")),
 };
 
-export const STARTING_BLOCK = 11722;
+export const STARTING_BLOCK = 12189;
 
 export const NOGAME_CONTRACT =
-  "0x068d1d807519589dab441e970986e469ac565a4ce6d3c82faf0fdec4100aa760";
+  "0x07287f2df129f8869638b5e7bf1b9e5961e57836f9762c8caa80e9e7831eeadc";
 
 export const SEPOLIA_URL = "https://sepolia.starknet.a5a.ch";
 export const MAINNET_URL = "https://mainnet.starknet.a5a.ch";
