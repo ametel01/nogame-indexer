@@ -56,3 +56,11 @@ jobs:
               sudo systemctl start indexer.service
               sudo systemctl enable indexer.service
             fi
+
+            # Check if indexer.service is running correctly
+            if systemctl --quiet is-active indexer.service; then
+              echo "indexer.service is running."
+            else
+              echo "indexer.service failed to start."
+              exit 1
+            fi
