@@ -16,7 +16,7 @@ export const SELECTOR_KEYS = {
 export const STARTING_BLOCK = 12189;
 
 export const NOGAME_CONTRACT =
-  '0x01b7247924141ef1f4ceb96b14d4076d1c4ac54f14cc023083169f375dee158f';
+  '0x0519afeefd86845375134c0e3c0331ad578960e1d020041155385d54b721dd04';
 
 export const SEPOLIA_URL = 'https://sepolia.starknet.a5a.ch';
 export const MAINNET_URL = 'https://mainnet.starknet.a5a.ch';
