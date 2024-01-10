@@ -1,25 +1,25 @@
-import { hash } from "./deps.ts";
+import { hash } from './deps.ts';
 
 export function formatFelt(key: bigint): string {
-  return "0x" + key.toString(16);
+  return '0x' + key.toString(16);
 }
 
 export const SELECTOR_KEYS = {
-  COMPOUNDS: BigInt(hash.getSelectorFromName("CompoundSpent")),
-  TECHS: BigInt(hash.getSelectorFromName("TechSpent")),
-  FLEET: BigInt(hash.getSelectorFromName("FleetSpent")),
-  DEFENCES: BigInt(hash.getSelectorFromName("DefenceSpent")),
-  PLANET: BigInt(hash.getSelectorFromName("PlanetGenerated")),
-  BATTLE: BigInt(hash.getSelectorFromName("BattleReport")),
+  COMPOUNDS: BigInt(hash.getSelectorFromName('CompoundSpent')),
+  TECHS: BigInt(hash.getSelectorFromName('TechSpent')),
+  FLEET: BigInt(hash.getSelectorFromName('FleetSpent')),
+  DEFENCES: BigInt(hash.getSelectorFromName('DefenceSpent')),
+  PLANET: BigInt(hash.getSelectorFromName('PlanetGenerated')),
+  BATTLE: BigInt(hash.getSelectorFromName('BattleReport')),
 };
 
 export const STARTING_BLOCK = 12189;
 
 export const NOGAME_CONTRACT =
-  "0x07287f2df129f8869638b5e7bf1b9e5961e57836f9762c8caa80e9e7831eeadc";
+  '0x01e2b08541cd0a30e641573f9389808d24cff07745d23bc79ea48c2b01cb747d';
 
-export const SEPOLIA_URL = "https://sepolia.starknet.a5a.ch";
-export const MAINNET_URL = "https://mainnet.starknet.a5a.ch";
+export const SEPOLIA_URL = 'https://sepolia.starknet.a5a.ch';
+export const MAINNET_URL = 'https://mainnet.starknet.a5a.ch';
 
 export enum Names {
   STEEL = 1,
