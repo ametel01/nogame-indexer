@@ -55,8 +55,11 @@ export default function transform({ events, header }: Block) {
 
     // Temporary to avoid null pk error
     const uniqueId =
-      Math.floor(Date.now() / 1000) +
-      (Math.floor(Math.random() * 1000) % 2147483647);
+      (Math.floor(parseInt(event.data[4], 16) / 1000) +
+        Math.floor(Math.random() * 100000000)) %
+      2147483647;
+
+    console.log(uniqueId);
 
     let type = '';
     switch (key) {
