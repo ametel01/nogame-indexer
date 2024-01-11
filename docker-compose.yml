@@ -43,24 +43,7 @@ services:
       PERSIST_TO_ETCD: http://etcd:2379
       SINK_ID: resources-spent
       AUTH_TOKEN: ${AUTH_TOKEN}
-
-  upgrades_levels:
-    image: quay.io/apibara/sink-postgres:0.4.10
-    depends_on:
-    - etcd
-    restart: always
-    command:
-    - run
-    -  --allow-env=/data/.env 
-    - /data/src/upgradesLevels.ts
-    volumes:
-    - ./:/data/
-    - .certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
-    environment:
-      PERSIST_TO_ETCD: http://etcd:2379
-      SINK_ID: upgrades-levels
-      AUTH_TOKEN: ${AUTH_TOKEN}
-
+      
   battle_reports:
     image: quay.io/apibara/sink-postgres:0.4.10
     depends_on:
