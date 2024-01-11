@@ -13,7 +13,7 @@ export const SELECTOR_KEYS = {
   BATTLE: BigInt(hash.getSelectorFromName('BattleReport')),
 };
 
-export const STARTING_BLOCK = 12189;
+export const STARTING_BLOCK = 18274;
 
 export const NOGAME_CONTRACT =
   '0x0519afeefd86845375134c0e3c0331ad578960e1d020041155385d54b721dd04';
