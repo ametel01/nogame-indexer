@@ -49,8 +49,8 @@ export default function transform({ events, header }: Block) {
 
   const output = events.map(({ event }: EventWithTransaction) => {
     const planetId = parseInt(event.data[0], 16);
-    const steel = parseInt(event.data[3], 16);
-    const quartz = parseInt(event.data[4], 16);
+    const steel = parseInt(event.data[2], 16);
+    const quartz = parseInt(event.data[3], 16);
     const key = BigInt(event.keys[0]);
 
     // Temporary to avoid null pk error
