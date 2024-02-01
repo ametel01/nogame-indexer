@@ -11,7 +11,7 @@ services:
     - 2379:2379
 
   planet_generated:
-    image: quay.io/apibara/sink-postgres:0.4.10
+    image: quay.io/apibara/sink-postgres:0.5.4
     depends_on:
     - etcd
     restart: always
@@ -28,7 +28,7 @@ services:
       AUTH_TOKEN: ${AUTH_TOKEN}
 
   resources_spent:
-    image: quay.io/apibara/sink-postgres:0.4.10
+    image: quay.io/apibara/sink-postgres:0.5.4
     depends_on:
     - etcd
     restart: always
@@ -45,7 +45,7 @@ services:
       AUTH_TOKEN: ${AUTH_TOKEN}
       
   battle_reports:
-    image: quay.io/apibara/sink-postgres:0.4.10
+    image: quay.io/apibara/sink-postgres:0.5.4
     depends_on:
     - etcd
     restart: always
