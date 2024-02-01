@@ -52,14 +52,13 @@ export default function transform({ events, header }: Block) {
     const steel = parseInt(event.data[2], 16);
     const quartz = parseInt(event.data[3], 16);
     const key = BigInt(event.keys[0]);
+    console.log('planetId', planetId);
 
     // Temporary to avoid null pk error
     const uniqueId =
       (Math.floor(parseInt(event.data[4], 16) / 1000) +
         Math.floor(Math.random() * 100000000)) %
       2147483647;
-
-    console.log(uniqueId);
 
     let type = '';
     switch (key) {
