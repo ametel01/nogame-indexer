@@ -61,6 +61,23 @@ services:
       SINK_ID: battle-reports
       AUTH_TOKEN: ${AUTH_TOKEN}
 
+  debris_collection:
+    image: quay.io/apibara/sink-postgres:0.5.5
+    depends_on:
+    - etcd
+    restart: always
+    command:
+    - run
+    -  --allow-env=/data/.env 
+    - /data/src/debrisCollection.ts
+    volumes:
+    - ./:/data/
+    - .certificates/prod-ca-2021.pem:/certs/prod-ca-2021.pem
+    environment:
+      PERSIST_TO_ETCD: http://etcd:2379
+      SINK_ID: debris-collection
+      AUTH_TOKEN: ${AUTH_TOKEN}
+
 
 volumes:
   etcd_data:

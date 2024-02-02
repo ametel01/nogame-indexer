@@ -11,6 +11,7 @@ export const SELECTOR_KEYS = {
   DEFENCES: BigInt(hash.getSelectorFromName('DefenceSpent')),
   PLANET: BigInt(hash.getSelectorFromName('PlanetGenerated')),
   BATTLE: BigInt(hash.getSelectorFromName('BattleReport')),
+  DEBRIS: BigInt(hash.getSelectorFromName('DebrisCollected')),
 };
 
 export const STARTING_BLOCK = 18274;
