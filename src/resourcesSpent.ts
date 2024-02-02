@@ -34,12 +34,19 @@ export const config = {
   },
   sinkType: 'postgres',
   sinkOptions: {
-    connectionString: Deno.env.get('PGQL_CONNECTION'),
+    connectionString: Deno.env.get('PGQL_SELF_HOST'),
     tableName: 'resourcespent',
     tlsCertificate: Deno.env.get('PEM_CERTIFICATE'),
     tlsAcceptInvalidCertificates: true,
+    entityMode: false,
   },
 };
+
+function generateRandomPostgresInt(): number {
+  const min = -2147483648;
+  const max = 2147483647;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 export default function transform({ events, header }: Block) {
   if (!header) {
@@ -52,13 +59,8 @@ export default function transform({ events, header }: Block) {
     const steel = parseInt(event.data[2], 16);
     const quartz = parseInt(event.data[3], 16);
     const key = BigInt(event.keys[0]);
-    console.log('planetId', planetId);
 
-    // Temporary to avoid null pk error
-    const uniqueId =
-      (Math.floor(parseInt(event.data[4], 16) / 1000) +
-        Math.floor(Math.random() * 100000000)) %
-      2147483647;
+    const spent_id = generateRandomPostgresInt();
 
     let type = '';
     switch (key) {
@@ -79,13 +81,12 @@ export default function transform({ events, header }: Block) {
     }
 
     return {
-      spent_id: uniqueId,
+      spent_id: spent_id,
       planet_id: planetId,
       type: type,
       steel: steel,
       quartz: quartz,
     };
   });
-
-  return output.filter((item) => item !== undefined);
+  return output;
 }

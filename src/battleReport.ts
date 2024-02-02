@@ -1,17 +1,17 @@
-import { Block, EventWithTransaction } from "./common/deps.ts";
+import { Block, EventWithTransaction } from './common/deps.ts';
 import {
   SELECTOR_KEYS,
   NOGAME_CONTRACT,
   STARTING_BLOCK,
   SEPOLIA_URL,
   formatFelt,
-} from "./common/constants.ts";
+} from './common/constants.ts';
 
 export const config = {
   streamUrl: SEPOLIA_URL,
   startingBlock: STARTING_BLOCK,
-  network: "starknet",
-  finally: "DATA_STATUS_PENDING",
+  network: 'starknet',
+  finally: 'DATA_STATUS_PENDING',
   filter: {
     header: { weak: true },
     events: [
@@ -21,26 +21,31 @@ export const config = {
       },
     ],
   },
-  sinkType: "postgres",
+  sinkType: 'postgres',
   sinkOptions: {
-    connectionString: Deno.env.get("PGQL_CONNECTION"),
-    tableName: "battlereport",
-    tlsCertificate: Deno.env.get("PEM_CERTIFICATE"),
+    connectionString: Deno.env.get('PGQL_SELF_HOST'),
+    tableName: 'battlereport',
+    tlsCertificate: Deno.env.get('PEM_CERTIFICATE'),
     tlsAcceptInvalidCertificates: true,
   },
 };
 
+function generateRandomPostgresInt(): number {
+  const min = -2147483648;
+  const max = 2147483647;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 export default function transform({ events, header }: Block) {
   if (!header) {
-    console.log("missing header, unable to process", events.length, "events");
+    console.log('missing header, unable to process', events.length, 'events');
     return;
   }
 
   return events.map(({ event }: EventWithTransaction) => {
     const { timestamp } = header;
     // Temporary to avoid null pk error
-    const uniqueId =
-      Math.floor(Date.now() / 1000) + Math.floor(Math.random() * 1000);
+    const uniqueId = generateRandomPostgresInt();
     const attackerId = parseInt(event.data[1], 16);
     const attackerPosition = {
       system: parseInt(event.data[2], 16),

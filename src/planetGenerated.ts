@@ -1,17 +1,17 @@
 // import { hash } from "https://esm.sh/starknet@5.14";
-import { Block, EventWithTransaction } from "./common/deps.ts";
+import { Block, EventWithTransaction } from './common/deps.ts';
 import {
   SELECTOR_KEYS,
   NOGAME_CONTRACT,
   STARTING_BLOCK,
   SEPOLIA_URL,
   formatFelt,
-} from "./common/constants.ts";
+} from './common/constants.ts';
 
 export const config = {
   streamUrl: SEPOLIA_URL,
   startingBlock: STARTING_BLOCK,
-  network: "starknet",
+  network: 'starknet',
   filter: {
     header: { weak: true },
     events: [
@@ -21,18 +21,18 @@ export const config = {
       },
     ],
   },
-  sinkType: "postgres",
+  sinkType: 'postgres',
   sinkOptions: {
-    connectionString: Deno.env.get("PGQL_CONNECTION"),
-    tableName: "planet",
-    tlsCertificate: Deno.env.get("PEM_CERTIFICATE"),
+    connectionString: Deno.env.get('PGQL_SELF_HOST'),
+    tableName: 'planet',
+    tlsCertificate: Deno.env.get('PEM_CERTIFICATE'),
     tlsAcceptInvalidCertificates: true,
   },
 };
 
 export default function transform({ events, header }: Block) {
   if (!header) {
-    console.log("missing header, unable to process", events.length, "events");
+    console.log('missing header, unable to process', events.length, 'events');
     return;
   }
 

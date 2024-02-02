@@ -6,3 +6,7 @@ node_modules/
 .certificates
 certificates
 .x
+
+prod-ca-2021.crt
+
+server.crt
