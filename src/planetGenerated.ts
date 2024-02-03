@@ -12,6 +12,7 @@ export const config = {
   streamUrl: SEPOLIA_URL,
   startingBlock: STARTING_BLOCK,
   network: 'starknet',
+  finality: 'DATA_STATUS_PENDING',
   filter: {
     header: { weak: true },
     events: [

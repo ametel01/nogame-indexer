@@ -8,8 +8,9 @@ import {
 
 export const config = {
   streamUrl: SEPOLIA_URL,
-  startingBlock: 21782,
+  startingBlock: 29415,
   network: 'starknet',
+  finality: 'DATA_STATUS_PENDING',
   filter: {
     header: { weak: true },
     events: [
@@ -44,27 +45,29 @@ export default function transform({ events, header }: Block) {
   const output = events.map(({ event }: EventWithTransaction) => {
     const { timestamp } = header;
     const rawPlanetId = parseInt(event.data[0], 16);
-    const planetId =
+    const planet_id =
       rawPlanetId > 1000
         ? Math.floor(parseInt(event.data[0], 16) / 1000)
         : rawPlanetId;
-    const rawDebrisFieldId = parseInt(event.data[1], 16);
-    const debrisFieldId =
-      rawDebrisFieldId > 1000
-        ? Math.floor(parseInt(event.data[1], 16) / 1000)
-        : rawDebrisFieldId;
-    const steel = parseInt(event.data[2], 16);
-    const quartz = parseInt(event.data[3], 16);
+    const system = parseInt(event.data[1], 16);
+    const orbit = parseInt(event.data[2], 16);
+    const collectible_steel = parseInt(event.data[3], 16);
+    const collectible_quartz = parseInt(event.data[4], 16);
+    const collected_steel = parseInt(event.data[5], 16);
+    const collected_quartz = parseInt(event.data[6], 16);
 
-    const collectionId = generateRandomPostgresInt();
+    const collection_id = generateRandomPostgresInt();
 
     return {
-      collection_id: collectionId,
-      timestamp: timestamp,
-      planet_id: planetId,
-      debris_field_id: debrisFieldId,
-      steel: steel,
-      quartz: quartz,
+      collection_id,
+      timestamp,
+      planet_id,
+      system,
+      orbit,
+      collectible_steel,
+      collectible_quartz,
+      collected_steel,
+      collected_quartz,
     };
   });
   return output;
