@@ -2,14 +2,13 @@ import { Block, EventWithTransaction } from './common/deps.ts';
 import {
   SELECTOR_KEYS,
   NOGAME_CONTRACT,
-  STARTING_BLOCK,
   SEPOLIA_URL,
   formatFelt,
 } from './common/constants.ts';
 
 export const config = {
   streamUrl: SEPOLIA_URL,
-  startingBlock: STARTING_BLOCK,
+  startingBlock: 23359,
   network: 'starknet',
   finality: 'DATA_STATUS_PENDING',
   filter: {
@@ -56,6 +55,7 @@ export default function transform({ events, header }: Block) {
   }
 
   const output = events.map(({ event }: EventWithTransaction) => {
+    const { timestamp } = header;
     const planetId = parseInt(event.data[0], 16);
     const steel = parseInt(event.data[2], 16);
     const quartz = parseInt(event.data[3], 16);
@@ -82,6 +82,7 @@ export default function transform({ events, header }: Block) {
     }
 
     return {
+      time: timestamp,
       spent_id: spent_id,
       planet_id: planetId,
       type: type,
